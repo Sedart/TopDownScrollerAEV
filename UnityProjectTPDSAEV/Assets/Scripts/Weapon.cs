@@ -37,7 +37,6 @@ public class Weapon : MonoBehaviour {
 		tempBullet = GameObject.Instantiate (bullet, bulletPos, rotation) as GameObject;
 		tempBullet.GetComponent<Bullet> ().bulletDamage = bulletDamage;
 		tempBullet.GetComponent<Bullet> ().bulletSpeed = bulletSpeed;
-		tempBullet.GetComponent<Bullet> ().targetPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		currentAmmo--;
 
 		canShoot = false;
@@ -49,5 +48,16 @@ public class Weapon : MonoBehaviour {
 	public void ResetShootCoolDown()
 	{
 		canShoot = true;
+	}
+
+	public void Recharge(int ammoAdd)
+	{
+		currentAmmo += ammoAdd;
+		currentAmmo = Mathf.Min (currentAmmo, maxAmmo);
+	}
+
+	public void FullRecharge()
+	{
+		Recharge (maxAmmo);
 	}
 }

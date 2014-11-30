@@ -11,14 +11,15 @@ public class Bullet : MonoBehaviour {
 	//[HideInInspector]
 	public float bulletSpeed;
 
-	//Target position
-	[HideInInspector]
-	public Vector3 targetPos;
+	public void Update()
+	{
+		transform.Translate (transform.up * bulletSpeed * Time.deltaTime, Space.World);
+	}
 
-	// Update is called once per frame
-	void Start () {
-		//(targetPos - transform.position)
-		//transform.Translate(new Vector3(Mathf.Cos(Mathf.Deg2Rad * transform.localEulerAngles.z), Mathf.Sin(Mathf.Deg2Rad * transform.localEulerAngles.z ), 0.0f));
-		rigidbody2D.AddForce(transform.up * bulletSpeed);
+
+	//If bullet collides with a level boundary destroy bullet
+	public void OnTriggerEnter2D(Collider2D other)
+	{
+		Destroy (gameObject);
 	}
 }

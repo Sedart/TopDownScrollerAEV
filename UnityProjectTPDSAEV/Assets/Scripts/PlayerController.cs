@@ -40,6 +40,12 @@ public class PlayerController : MonoBehaviour {
 				player.mainWeapon.Shoot(bulletSpawnPos.position, player.gameObject.transform.rotation);
 			}
 		}
+
+		//Recharge weapon if e button us pressed
+		if(Input.GetKey(KeyCode.E))
+		{
+			player.mainWeapon.FullRecharge();
+		}
 		#endregion
 	}
 }
