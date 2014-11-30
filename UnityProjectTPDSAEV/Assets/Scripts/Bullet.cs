@@ -16,7 +16,9 @@ public class Bullet : MonoBehaviour {
 	public Vector3 targetPos;
 
 	// Update is called once per frame
-	void Update () {
-		transform.Translate((targetPos - transform.position) * bulletSpeed * Time.deltaTime);
+	void Start () {
+		//(targetPos - transform.position)
+		//transform.Translate(new Vector3(Mathf.Cos(Mathf.Deg2Rad * transform.localEulerAngles.z), Mathf.Sin(Mathf.Deg2Rad * transform.localEulerAngles.z ), 0.0f));
+		rigidbody2D.AddForce(transform.up * bulletSpeed);
 	}
 }
