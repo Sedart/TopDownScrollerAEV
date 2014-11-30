@@ -7,13 +7,13 @@ public class Weapon : MonoBehaviour {
 	[HideInInspector]
 	public int currentAmmo;
 
-	public int bulletDamage;
-
 	public float shootCoolDownTime;
 	private bool canShoot;
 
 	//Bullet prefab
 	public GameObject bullet;
+	public int bulletDamage;
+	public float bulletSpeed;
 
 	// Use this for initialization
 	void Start () {
@@ -29,11 +29,15 @@ public class Weapon : MonoBehaviour {
 			return false;
 	}
 
+	private GameObject tempBullet;
 	public void Shoot(Vector3 bulletPos, Quaternion rotation)
 	{
 		//Instantiate bullet on bulletPos position with the current player rotation
 		//Inmprovement: Use of pool to instantiate bullets
-		GameObject.Instantiate (bullet, bulletPos, rotation);
+		tempBullet = GameObject.Instantiate (bullet, bulletPos, rotation) as GameObject;
+		tempBullet.GetComponent<Bullet> ().bulletDamage = bulletDamage;
+		tempBullet.GetComponent<Bullet> ().bulletSpeed = bulletSpeed;
+		tempBullet.GetComponent<Bullet> ().targetPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		currentAmmo--;
 
 		canShoot = false;
