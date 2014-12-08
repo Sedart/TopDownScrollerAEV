@@ -1,75 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Pathfinding;
-
 
 public class Enemy : MonoBehaviour {
 
-	public Transform targetTransform;
+	public int maxHealth;
+	[HideInInspector]
+	public int currentHealth;
+	
+	public Weapon mainWeapon;
 
-	private Seeker seeker;
-	
-	//The calculated path
-	public Path path;
-	
-	//The AI's speed per second
-	public float speed;
+	[HideInInspector]
+	public bool death;
 
-	//The AI's rotation to aim speed
-	public float rotationSpeed;
+	// Use this for initialization
+	void Start () {
 	
-	//The max distance from the AI to a waypoint for it to continue to the next waypoint
-	public float nextWaypointDistance = 3;
-	
-	//The waypoint we are currently moving towards
-	private int currentWaypoint = 0;
-	
-	public void Start () {
-		seeker = GetComponent<Seeker>();
-
-		//Start a new path to the targetPosition, return the result to the OnPathComplete function
-		seeker.StartPath (transform.position, targetTransform.position, OnPathComplete);
-	}
-
-	
-	public void OnPathComplete (Path p) {
-		Debug.Log ("Yay, we got a path back. Did it have an error? "+p.error);
-		if (!p.error) {
-			path = p;
-			//Reset the waypoint counter
-			currentWaypoint = 0;
-		}
-
-		//Start a new path to the targetPosition, return the result to the OnPathComplete function
-		seeker.StartPath (transform.position, targetTransform.position, OnPathComplete);
 	}
 	
-	public void FixedUpdate () {
-		if (path == null) {
-			//We have no path to move after yet
-			return;
-		}
-		
-		if (currentWaypoint >= path.vectorPath.Count) {
-			Debug.Log ("End Of Path Reached");
-			return;
-		}
-		
-		//Direction to the next waypoint
-		Vector3 dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
-		dir *= speed * Time.fixedDeltaTime;
+	// Update is called once per frame
+	void Update () {
+	
+	}
 
-		//Rotate and move enemy smoothly
-		transform.localRotation = Quaternion.Lerp(transform.rotation,
-		                                          Quaternion.LookRotation(Vector3.forward, path.vectorPath[currentWaypoint]  - transform.position),
-		                                          Time.fixedDeltaTime * rotationSpeed);
-		transform.Translate (dir, Space.World);
-		
-		//Check if we are close enough to the next waypoint
-		//If we are, proceed to follow the next waypoint
-		if (Vector3.Distance (transform.position,path.vectorPath[currentWaypoint]) < nextWaypointDistance) {
-			currentWaypoint++;
-			return;
+	public void SubstractHealth(int amount){
+		currentHealth -= amount;
+		if(currentHealth <= 0){
+			death = true;
+			//Notify game manager of player death
 		}
 	}
-} 
+	
+	public void AddHealth(int amount){
+		currentHealth += amount;
+		currentHealth = Mathf.Min (currentHealth, maxHealth);
+	}
+}
