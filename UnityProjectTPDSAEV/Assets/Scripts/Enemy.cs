@@ -14,6 +14,9 @@ public class Enemy : MonoBehaviour {
 	
 	//The AI's speed per second
 	public float speed;
+
+	//The AI's rotation to aim speed
+	public float rotationSpeed;
 	
 	//The max distance from the AI to a waypoint for it to continue to the next waypoint
 	public float nextWaypointDistance = 3;
@@ -56,8 +59,10 @@ public class Enemy : MonoBehaviour {
 		Vector3 dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
 		dir *= speed * Time.fixedDeltaTime;
 
-		//Rotate and move enemy
-		transform.localRotation = Quaternion.LookRotation(Vector3.forward, path.vectorPath[currentWaypoint]  - transform.position);
+		//Rotate and move enemy smoothly
+		transform.localRotation = Quaternion.Lerp(transform.rotation,
+		                                          Quaternion.LookRotation(Vector3.forward, path.vectorPath[currentWaypoint]  - transform.position),
+		                                          Time.fixedDeltaTime * rotationSpeed);
 		transform.Translate (dir, Space.World);
 		
 		//Check if we are close enough to the next waypoint
