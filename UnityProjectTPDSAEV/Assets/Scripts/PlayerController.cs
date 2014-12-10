@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		bulletSpawnPos = GameObject.Find ("Hero/MainWeapon/BulletSpawnPos").transform;
-		Debug.Log (bulletSpawnPos);
 	}
 	
 	// Update is called once per frame

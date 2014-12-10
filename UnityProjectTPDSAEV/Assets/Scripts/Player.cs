@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
@@ -12,9 +13,16 @@ public class Player : MonoBehaviour {
 	[HideInInspector]
 	public bool death;
 
+	private Text heroHealth;
+
 	// Use this for initialization
 	void Start () {
-		currentHealth = maxHealth;
+		//Store HumanDescription health
+		heroHealth = GameObject.Find ("HeroHealth").GetComponent<Text> ();
+
+		Debug.Log(GameObject.Find ("HeroHealth").ToString());
+
+		AddHealth (maxHealth);
 		death = false;
 	}
 	
@@ -29,10 +37,16 @@ public class Player : MonoBehaviour {
 			death = true;
 			//Notify game manager of player death
 		}
+
+		//Update health HUD
+		heroHealth.text = "Health: " + currentHealth.ToString ();
 	}
 
 	public void AddHealth(int amount){
 		currentHealth += amount;
 		currentHealth = Mathf.Min (currentHealth, maxHealth);
+
+		//Update health HUD
+		heroHealth.text = "Health: " + currentHealth.ToString ();
 	}
 }

@@ -26,7 +26,11 @@ public class Enemy : MonoBehaviour {
 		currentHealth -= amount;
 		if(currentHealth <= 0){
 			death = true;
-			//Notify game manager of player death
+			//Notify game manager of enemy death
+			GameObject.Find("GameManager").GetComponent<GameManager>().EnemyKilled();
+
+			//Destroy enemy
+			Destroy(gameObject);
 		}
 	}
 	
