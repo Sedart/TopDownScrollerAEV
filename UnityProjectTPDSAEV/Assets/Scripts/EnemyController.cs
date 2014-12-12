@@ -19,6 +19,9 @@ public class EnemyController : MonoBehaviour {
 
 	//The AI's rotation to aim speed
 	public float rotationSpeed;
+
+	//Necessary distance to shoot at the player
+	public float shootDistance;
 	
 	//The max distance from the AI to a waypoint for it to continue to the next waypoint
 	public float nextWaypointDistance = 3;
@@ -57,7 +60,7 @@ public class EnemyController : MonoBehaviour {
 	public void Update(){
 		//Shoot every time the enemy can, to make player movement more difficult
 		//also recharge, as with no recharge time, making enemies recharge will not slow down its shooting
-		if(enemy.mainWeapon.CanShoot()){
+		if(enemy.mainWeapon.CanShoot() && Vector2.Distance(transform.position, targetTransform.position) < shootDistance ){
 			enemy.mainWeapon.Shoot(bulletSpawnPos.position, transform.rotation);
 			enemy.mainWeapon.FullRecharge();
 		}

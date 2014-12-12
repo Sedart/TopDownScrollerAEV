@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour {
 		//Player reference
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 
+		player.transform.position = new Vector2 (0.0f, 0.0f);
+
 		//Start enemy waves
 		SpawnSomeEnemyWaves ();
 	}
@@ -55,6 +57,8 @@ public class GameManager : MonoBehaviour {
 		currentWaveEnemiesDefeated = 0;
 		currentWaveEnemiesSpawned = 0;
 		enemiesByWave += enemiesIncrementByWave;
+
+		player.AddHealth (player.maxHealth);
 
 		SpawnSomeEnemyWaves ();
 	}
