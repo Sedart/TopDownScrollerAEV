@@ -38,7 +38,8 @@ public class Weapon : MonoBehaviour {
 	{
 		//Instantiate bullet on bulletPos position with the current player rotation
 		//Inmprovement: Use of pool to instantiate bullets
-		tempBullet = GameObject.Instantiate (bullet, bulletPos, rotation) as GameObject;
+		//tempBullet = GameObject.Instantiate (bullet, bulletPos, rotation) as GameObject;
+		tempBullet = bullet.Spawn (bulletPos, rotation);
 
 		//Set values again as we are recycling bullets
 		//and to secure weapon values are set
