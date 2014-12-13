@@ -19,6 +19,10 @@ public class Weapon : MonoBehaviour {
 	void Start () {
 		currentAmmo = maxAmmo;
 		canShoot = true;
+
+		//Optimizaction
+		//Pool of bullets to recycle them and avoid GC
+		bullet.CreatePool (20);
 	}
 
 	public bool CanShoot()
@@ -35,8 +39,12 @@ public class Weapon : MonoBehaviour {
 		//Instantiate bullet on bulletPos position with the current player rotation
 		//Inmprovement: Use of pool to instantiate bullets
 		tempBullet = GameObject.Instantiate (bullet, bulletPos, rotation) as GameObject;
+
+		//Set values again as we are recycling bullets
+		//and to secure weapon values are set
 		tempBullet.GetComponent<Bullet> ().bulletDamage = bulletDamage;
 		tempBullet.GetComponent<Bullet> ().bulletSpeed = bulletSpeed;
+
 		currentAmmo--;
 
 		canShoot = false;

@@ -30,6 +30,7 @@ public class Bullet : MonoBehaviour {
 			other.GetComponent<Enemy>().SubstractHealth(bulletDamage);
 		}
 
-		Destroy (gameObject);
+		//Destroy (gameObject); Previous call, now we recycle them
+		gameObject.Recycle ();
 	}
 }

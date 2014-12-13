@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -20,7 +21,9 @@ public class GameManager : MonoBehaviour {
 	public int currentWaveEnemiesDefeated;
 
 	//Player reference, necessary to chek if player is death
-	private Player player;
+	public Player player;
+
+	public Text waveCounter;
 
 	// Use this for initialization
 	void Start () {
@@ -34,10 +37,16 @@ public class GameManager : MonoBehaviour {
 		//Wave info initialization
 		currentWave = 0;
 
+		//Update wave counter
+		waveCounter.text = "Wave: " + currentWave;
+
 		//Player reference
-		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
+		//player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 
 		player.transform.position = new Vector2 (0.0f, 0.0f);
+
+		//Wave counter reference
+		//waveCounter = GameObject.Find ("WaveCounter").GetComponent<Text> ();
 
 		//Start enemy waves
 		SpawnSomeEnemyWaves ();
@@ -47,8 +56,8 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		//If players dies reestart the game
 		//or show restart pop up
-		if(player.death)
-			Start ();
+		if (player.death)
+			Application.LoadLevel (Application.loadedLevel);
 	}
 
 	//Called when all enemies of the last wave are killed
@@ -59,6 +68,9 @@ public class GameManager : MonoBehaviour {
 		enemiesByWave += enemiesIncrementByWave;
 
 		player.AddHealth (player.maxHealth);
+
+		//Update wave counter
+		waveCounter.text = "Wave: " + currentWave;
 
 		SpawnSomeEnemyWaves ();
 	}
