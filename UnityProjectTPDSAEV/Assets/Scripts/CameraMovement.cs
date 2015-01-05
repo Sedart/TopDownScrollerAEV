@@ -7,8 +7,8 @@ public class CameraMovement : MonoBehaviour {
 
 	public float cameraSpeed;
 
-	public float mapX = 100.0f;
-	public float mapY = 100.0f;
+	public float mapX;
+	public float mapY;
 	
 	private float minX;
 	private float maxX;
