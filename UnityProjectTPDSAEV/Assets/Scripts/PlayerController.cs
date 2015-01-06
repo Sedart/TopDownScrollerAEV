@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour {
 
 	private Transform bulletSpawnPos;
 
+	public float dashForce;
+
 	// Use this for initialization
 	void Start () {
 		bulletSpawnPos = GameObject.Find ("Hero/MainWeapon/BulletSpawnPos").transform;
@@ -44,6 +46,13 @@ public class PlayerController : MonoBehaviour {
 		if(Input.GetKey(KeyCode.E))
 		{
 			player.mainWeapon.FullRecharge();
+		}
+		#endregion
+
+		#region basic dash ability
+		//Dash hero in the direction it is aiming
+		if(Input.GetKeyDown(KeyCode.Mouse1)){
+			gameObject.rigidbody2D.AddForce((mousePos - transform.position).normalized * dashForce, ForceMode2D.Impulse);
 		}
 		#endregion
 	}
